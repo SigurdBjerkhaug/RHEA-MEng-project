@@ -6,7 +6,7 @@ import pandas as pd
 # deals with weight percent and atomic percent conversion
 
 
-def atomic_percent_to_wegiht_percent(
+def atomic_percent_to_weight_percent(
     alloy_composition_atomic_percent, atomic_masses=ElementProperties.atomic_masses
 ):
     """alloy_composition_atomic is a dictionary with Element being Key and atomic percent being Value"""
