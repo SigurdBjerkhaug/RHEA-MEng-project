@@ -184,3 +184,104 @@ def npy_to_dataframe(npy_file, header_row=[]):
     if header_row != []:
         dummy_data_frame.columns = header_row
     return dummy_data_frame
+
+
+# making tables under below
+
+
+def alloy_preparation_latex_table(
+    alloys, batch_number, sample_target_weight=10, folder="Latex\\"
+):
+    """Generate a latex table for alloy preparation"""
+    pd.set_option("display.max_colwidth", None)
+
+    sample_target_weight = sample_target_weight  # target weight in grams
+
+    target_component_weights = []
+    weight_percent = []
+
+    component_weights = []
+    measured_component_weights = []
+
+    # Latex formatted strings
+    atomic_percent_shorthand = []
+    weight_percent_shorthand = []
+    alloy_shortcode = []
+
+    for alloy in alloys:
+        alloy_weight_percent = atomic_percent_to_weight_percent(alloy)
+        weight_percent.append(alloy_weight_percent)
+        atomic_percent_shorthand.append(dictionary_to_alloy_latex_shorthand(alloy))
+        weight_percent_shorthand.append(
+            dictionary_to_alloy_latex_shorthand(alloy_weight_percent)
+        )
+
+        target_component_weight = "\makecell[l]{"
+        measured_component_weight = "\makecell[l]{"
+
+        for element in alloy:
+            target_component_weight += rf" {element} : { alloy_weight_percent[element]*sample_target_weight/100:.2f} g \\"
+            measured_component_weight += rf" {element} :\\"
+
+        target_component_weight += "}"
+        measured_component_weight += "}"
+
+        component_weights.append(target_component_weight)
+        measured_component_weights.append(measured_component_weight)
+        target_component_weights.append(rf"{sample_target_weight} g")
+
+    for i in range(len(alloys)):
+        alloy_shortcode.append(f"B{batch_number}-{i+1}")
+
+    alloy_dictionary = {
+        "\thead{Shortcode}": alloy_shortcode,
+        "\thead{Composition \\\ At\%}": atomic_percent_shorthand,
+        "\thead{Composition \\\ Wt\%}": weight_percent_shorthand,
+        "\thead{Total target weight \\\ sample}": target_component_weights,
+        "\thead{Target weight \\\ per element}": component_weights,
+        "\thead{Measure weight \\\ per element}": measured_component_weights,
+    }
+
+    alloy_data = pd.DataFrame(alloy_dictionary)
+    alloy_data.to_latex(
+        f"{folder}Batch {batch_number}_Preparatory calculations.tex",
+        escape=False,
+        index=False,
+    )
+
+    return alloy_data
+
+
+def alloy_mesured_weight_input_sheet(alloys, batch_number):
+    """Creates excel sheet for easy data entry after preparing sample"""
+    alloys_components = []
+
+    alloys_shorthand = []
+    # alloys_component_entry = []
+
+    for alloy in alloys:
+        for element in alloy.keys():
+            if element in alloys_components:
+                continue
+            alloys_components.append(element)
+
+        alloys_shorthand.append(dictionary_to_alloy_shorthand(alloy))
+
+    alloys_components = pd.DataFrame(alloys_components, columns=["Alloying element"])
+    alloy_entry = []
+
+    for i in range(len(alloys_components)):
+        dummy = []
+        for j in range(len(alloys)):
+            dummy.append("")
+        alloy_entry.append(dummy)
+
+    alloys_component_entry = pd.concat(
+        [alloys_components, pd.DataFrame(alloy_entry, columns=alloys_shorthand)]
+    )
+
+    alloys_component_entry.to_excel(
+        f"Batch {batch_number}_Measured alloy component entry.xlsx", index=False
+    )
+
+    return alloys_component_entry
