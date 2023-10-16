@@ -157,7 +157,7 @@ def dictionary_to_alloy_latex_shorthand(alloy_dictionary):
 
     shorthand = ""
     for key in alloy_dictionary_keys:
-        shorthand += rf"{key}_{'{'}{float(alloy_dictionary[key]):.3}{'}'}"
+        shorthand += rf"${key}_{'{'}{float(alloy_dictionary[key]):.3}{'}'}$"
 
     return shorthand
 
