@@ -155,9 +155,15 @@ def dictionary_to_alloy_shorthand(alloy_dictionary):
 def dictionary_to_alloy_latex_shorthand(alloy_dictionary):
     alloy_dictionary_keys = list(alloy_dictionary.keys())
 
-    shorthand = ""
+    shorthand = "$"
     for key in alloy_dictionary_keys:
-        shorthand += rf"\${key}_\{{float(alloy_dictionary[key]):.3}\}\$"
+        if str(alloy_dictionary[key]).endswith("0") == True:
+            shorthand += rf"{key}_{float(alloy_dictionary[key]):.0f}"
+
+        else:
+            shorthand += rf"\{key}_{float(alloy_dictionary[key]):.3}"
+
+    shorthand += "$"
 
     return shorthand
 
