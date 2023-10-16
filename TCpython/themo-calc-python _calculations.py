@@ -1,6 +1,9 @@
-""" import os
+import os
+
 print(os.getcwd())
-os.chdir('c:\\Users\\sigur\\OneDrive - Imperial College London\\[01] MEng project\\[03] Computer calculators')
+os.chdir(
+    "c:\\Users\\sigur\\OneDrive - Imperial College London\\[01] MEng project\\[03] Computer calculators"
+)
 print(os.getcwd())
 import numpy as np
 
@@ -8,19 +11,15 @@ testArray = np.array([[2, 1], [3, 4]])
 
 
 import os
+
 print(os.getcwd())
-
-
-
-
-
-np.savetxt("test.txt", testArray) """
 
 from tc_python import *
 import numpy as np
 from matplotlib import pyplot as plt
+import datetime
 
-alloys = [
+batch_2_alloys = [
     {"Ti": 38.0, "V": 15.0, "Nb": 23.0, "Hf": 24.0},
     {"Ti": 25.0, "V": 25.0, "Nb": 25.0, "Hf": 25.0},
     {"Ti": 12.0, "V": 13.0, "Nb": 16.0, "Mo": 24.0, "Ta": 20.0, "W": 15.0},
@@ -90,7 +89,9 @@ def estimate_liquidus_solidus(alloys, Databases=["TCHEA2"]):
                 ]
             )
 
-    return solidus_liquidus_array
+    return np.save(
+        f"Solidus Liquidus Data{alloys}_{Databases}_17oct23.npy", solidus_liquidus_array
+    )
 
 
-print(estimate_liquidus_solidus(alloys))
+estimate_liquidus_solidus(batch_2_alloys)
