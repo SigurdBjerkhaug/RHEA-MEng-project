@@ -206,7 +206,7 @@ def alloy_preparation_latex_table(
     # Latex formatted strings
     atomic_percent_shorthand = []
     weight_percent_shorthand = []
-    alloy_shortcode = []
+    alloy_index = []
 
     for alloy in alloys:
         alloy_weight_percent = atomic_percent_to_weight_percent(alloy)
@@ -231,10 +231,10 @@ def alloy_preparation_latex_table(
         target_component_weights.append(rf"{sample_target_weight} g")
 
     for i in range(len(alloys)):
-        alloy_shortcode.append(f"B{batch_number}-{i+1}")
+        alloy_index.append(f"B{batch_number}-{i+1}")
 
     alloy_dictionary = {
-        "\thead{Shortcode}": alloy_shortcode,
+        "\thead{index}": alloy_index,
         "\thead{Composition \\\ At\%}": atomic_percent_shorthand,
         "\thead{Composition \\\ Wt\%}": weight_percent_shorthand,
         "\thead{Total target weight \\\ sample}": target_component_weights,
