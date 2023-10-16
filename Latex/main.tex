@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[a4]{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{booktabs}
 \usepackage{pdflscape}
@@ -8,6 +8,7 @@
 \usepackage{fourier} 
 \usepackage{array}
 \usepackage{makecell}
+
 
 \usepackage[margin=0.5in]{geometry}
 
@@ -31,12 +32,25 @@
 \begin{landscape}
 \section{Prep Calculations}
 
-\input{Batch 1_Preparatory calculations.tex}
 
-\newpage
-\section{Target vs measured compositon in At\%}
-\input{Batch1_target vs measured atomic composition}
+\begin{table}[h]
+    \centering
+    \caption{Preparatory calculations for batch 1 sample preparation and Arc melitng}
+    \input{Batch 1_Preparatory calculations.tex}
+    \label{tab:Batch1 preparation}
+\end{table}
 
 \end{landscape}
+\newpage
+
+\begin{table}[h]
+    \centering
+    \caption{Target at\% composition versus measures at\% composition}
+    \input{Batch1_target vs measured atomic composition}
+    \label{tab:Batch1 comparison}
+\end{table}
+
+
+
 
 \end{document}
