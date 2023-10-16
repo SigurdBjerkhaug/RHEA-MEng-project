@@ -7,9 +7,6 @@ os.chdir(
 print(os.getcwd())
 import numpy as np
 
-testArray = np.array([[2, 1], [3, 4]])
-
-
 import os
 
 print(os.getcwd())
@@ -20,8 +17,17 @@ np.savetxt("test.txt", testArray)
 from tc_python import *
 import numpy as np
 from matplotlib import pyplot as plt
+import datetime
 
-alloys = [
+batch_1_alloys = [
+    {"Ti": 38.0, "V": 15.0, "Nb": 23.0, "Hf": 24.0},
+    {"Ti": 25.0, "V": 25.0, "Nb": 25.0, "Hf": 25.0},
+    {"Ti": 20.0, "V": 20.0, "Nb": 20.0, "Hf": 20.0, "Si": 20.0},
+    {"Ti": 38.0, "V": 15.0, "Nb": 23.0, "Hf": 23.0, "Si": 1.0},
+    {"Ti": 20.0, "V": 20.0, "Nb": 20.0, "Hf": 20.0, "Cr": 20.0},
+]
+
+nature_matarials_alloys = [
     {"Ti": 38.0, "V": 15.0, "Nb": 23.0, "Hf": 24.0},
     {"Ti": 25.0, "V": 25.0, "Nb": 25.0, "Hf": 25.0},
     {"Ti": 12.0, "V": 13.0, "Nb": 16.0, "Mo": 24.0, "Ta": 20.0, "W": 15.0},
@@ -67,6 +73,7 @@ testArray = np.array([[1, 1, 1], [2, 2, 2]])
 np.save("test3", testArray)
 np.savetxt("test3.txt", testArray) """
 
+alloys = batch_1_alloys
 Databases = ["TCHEA2"]
 
 with TCPython() as session:
@@ -106,5 +113,8 @@ with TCPython() as session:
             ]
         )
         print(solidusLiquidusArray)
-        np.save(f"SolidusLiquidusData_{Database}_09oct23", solidusLiquidusArray)
+        np.save(
+            f"SolidusLiquidusData_batch1_{Database}_{datetime.date.today()}",
+            solidusLiquidusArray,
+        )
         np.savetxt("SolidusLiquidusData_09oct23.txt", solidusLiquidusArray, fmt="%s")
