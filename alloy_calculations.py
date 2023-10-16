@@ -143,11 +143,11 @@ def estimate_alloy_price(
 
 
 def dictionary_to_alloy_shorthand(alloy_dictionary):
-    alloy_dicttionary_keys = list(alloy_dictionary.keys())
+    alloy_dictionary_keys = list(alloy_dictionary.keys())
 
     shorthand = ""
-    for key in alloy_dicttionary_keys:
-        shorthand += f"{key}({float(alloy_dicttionary_keys[key]):.3})"
+    for key in alloy_dictionary_keys:
+        shorthand += f"{key}({float(alloy_dictionary[key]):.3})"
 
     return shorthand
 
