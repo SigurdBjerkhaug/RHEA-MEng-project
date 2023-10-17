@@ -237,14 +237,14 @@ def alloy_preparation_latex_table(
         "\thead{index}": alloy_index,
         "\thead{Composition \\\ At\%}": atomic_percent_shorthand,
         "\thead{Composition \\\ Wt\%}": weight_percent_shorthand,
-        "\thead{Total target weight \\\ sample}": target_component_weights,
+        "\thead{Total target \\\ weight  sample}": target_component_weights,
         "\thead{Target weight \\\ per element}": component_weights,
         "\thead{Measure weight \\\ per element}": measured_component_weights,
     }
 
     alloy_data = pd.DataFrame(alloy_dictionary)
     alloy_data.to_latex(
-        f"{folder}Batch {batch_number}_Preparatory calculations.tex",
+        f"{folder}Batch {batch_number}\\Batch {batch_number}_Preparatory calculations.tex",
         escape=False,
         index=False,
     )
