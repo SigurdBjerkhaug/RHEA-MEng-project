@@ -24,6 +24,9 @@ def create_scalebar(
     folder: str = "",
     save_folder: str = "",
     format: str = "tif",
+    bounding_box: str = False,
+    bar_color: str = "w",
+    alpha: float = 1,
 ) -> ():
     """filename should be a string with the name you want to apply,
     conversionFactor should be a float containing the pixels for one micrometre (found in imageJ),
@@ -40,37 +43,45 @@ def create_scalebar(
 
     width, height = test_image.size
 
+    width = float(width)
+    height = float(height)
+
     bar_length = conversion_factor * scalebar_length
-    bar_height = int(bar_length * 0.1)
+    bar_height = bar_length * 0.07
 
-    box_width = bar_length * 1.1
-    box_height = box_width * 0.4
+    if bounding_box != False:
+        box_width = bar_length * 1.1
+        box_height = box_width * 0.3
 
-    box = patches.Rectangle(
-        (width - box_width, height - box_height),
-        box_width,
-        box_height,
-        linewidth=1,
-        edgecolor="k",
-        facecolor="k",
-    )
-    axs["A)"].add_patch(box)
+        box = patches.Rectangle(
+            (width - box_width, height - box_height),
+            box_width,
+            box_height,
+            linewidth=0,
+            edgecolor=bounding_box,
+            facecolor=bounding_box,
+            alpha=alpha,
+        )
+        axs["A)"].add_patch(box)
 
     bar = patches.Rectangle(
-        (width - bar_length - (box_width - bar_length) / 2, height - (box_height - 20)),
+        (
+            width - bar_length * 1.05,
+            height - bar_height * 3.9,
+        ),
         bar_length,
         bar_height,
         linewidth=1,
-        edgecolor="w",
-        facecolor="w",
+        edgecolor=bar_color,
+        facecolor=bar_color,
     )
     axs["A)"].add_patch(bar)
 
     axs["A)"].text(
-        width - bar_length * 0.8,
-        height - box_height + bar_height * 3,
+        float(width - bar_length * 0.8),
+        float(height - bar_height * 2.0),
         f"{scalebar_length} {unit}",
-        color="w",
+        color=bar_color,
         fontsize="12",
         verticalalignment="top",
         weight="bold",
